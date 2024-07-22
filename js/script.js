@@ -6,12 +6,24 @@ async function getShaderTexts(
   fragmentShaderLocation = `../shaders/new/fragment.glsl`
 ) {
   const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation);
-  const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
 
-  const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation);
-  const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
+  if (VERTEX_SHADER_RESPONSE.status == 200) {
+    const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation);
+    const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
 
-  return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
+    const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation);
+    const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
+
+    return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
+  } else {
+    const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation.substring(3));
+    const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
+
+    const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation.substring(3));
+    const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
+
+    return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
+  }
 }
 
 window.onload = async () => {
@@ -48,12 +60,12 @@ window.onload = async () => {
   const VERTEX_SHADER = GL.createShader(GL.VERTEX_SHADER);
   const FRAGMENT_SHADER = GL.createShader(GL.FRAGMENT_SHADER);
 
-  let VERTEX_SHADER_LOCATION = `./../shaders/new/vertex.glsl`;
-  let FRAGMENT_SHADER_LOCATION = `./../shaders/new/fragment.glsl`;
+  let VERTEX_SHADER_LOCATION = `../shaders/new/vertex.glsl`;
+  let FRAGMENT_SHADER_LOCATION = `../shaders/new/fragment.glsl`;
 
   if (GL instanceof WebGLRenderingContext) {
-    VERTEX_SHADER_LOCATION = `./../shaders/old/vertex.glsl`;
-    FRAGMENT_SHADER_LOCATION = `./../shaders/old/fragment.glsl`;
+    VERTEX_SHADER_LOCATION = `../shaders/old/vertex.glsl`;
+    FRAGMENT_SHADER_LOCATION = `../shaders/old/fragment.glsl`;
   }
 
   const { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT } = await getShaderTexts(VERTEX_SHADER_LOCATION, FRAGMENT_SHADER_LOCATION);
