@@ -1,45 +1,3 @@
-const PHI = (1 + 5 ** (1 / 2)) / 2;
-const RECIPROCAL_OF_PHI = 1 / PHI;
-const ALPHA = 1.;
-
-const WHITE       = [1., 1., 1.];
-const GREEN       = [0., 1., 0.];
-const RED         = [1., 0., 0.];
-const BLUE        = [0., 0., 1.];
-const YELLOW      = [1., 1., 0.];
-const PURPLE      = [160 / 255,  32 / 255, 240 / 255];
-const LIGHT_GREEN = [144 / 255, 238 / 255, 144 / 255];
-const ORANGE      = [1., .5, 0.];
-const LIGHT_BLUE  = [173 / 255, 216 / 255, 230 / 255];
-const BEIGE       = [245 / 255, 245 / 255, 220 / 255];
-const PINK        = [255 / 255, 192 / 255, 203 / 255];
-const GRAY        = [.5, .5, .5];
-
-async function getShaderTexts(
-  vertexShaderLocation = `../shaders/new/vertex.glsl`,
-  fragmentShaderLocation = `../shaders/new/fragment.glsl`
-) {
-  const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation);
-
-  if (VERTEX_SHADER_RESPONSE.status == 200) {
-    const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation);
-    const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
-
-    const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation);
-    const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
-
-    return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
-  } else {
-    const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation.substring(3));
-    const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
-
-    const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation.substring(3));
-    const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
-
-    return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
-  }
-}
-
 window.onload = async () => {
   const CANVAS = document.querySelector(`#cv`);
 
@@ -117,190 +75,6 @@ window.onload = async () => {
     return;
   }
 
-  const DODECAHEDRON_VERTEXES = [
-    // Bottom Face (White)
-     0,                 -PHI,               -RECIPROCAL_OF_PHI, ...WHITE, ALPHA, 
-     1,                 -1,                 -1,                 ...WHITE, ALPHA, 
-     RECIPROCAL_OF_PHI,  0,                 -PHI,               ...WHITE, ALPHA, 
-    -RECIPROCAL_OF_PHI,  0,                 -PHI,               ...WHITE, ALPHA, 
-    -1,                 -1,                 -1,                 ...WHITE, ALPHA, 
-    
-    // 1st Layer 1st Face (Green)
-     0,                 PHI,                -RECIPROCAL_OF_PHI, ...GREEN, ALPHA, 
-     1,                 1,                  -1,                 ...GREEN, ALPHA, 
-     RECIPROCAL_OF_PHI, 0,                  -PHI,               ...GREEN, ALPHA, 
-    -RECIPROCAL_OF_PHI, 0,                  -PHI,               ...GREEN, ALPHA, 
-    -1,                 1,                  -1,                 ...GREEN, ALPHA, 
-    
-    // 1st Layer 2nd Face (Red)
-     PHI,                RECIPROCAL_OF_PHI,  0,                 ...RED, ALPHA, 
-     PHI,               -RECIPROCAL_OF_PHI,  0,                 ...RED, ALPHA, 
-     1,                 -1,                 -1,                 ...RED, ALPHA, 
-     RECIPROCAL_OF_PHI,  0,                 -PHI,               ...RED, ALPHA, 
-     1,                  1,                 -1,                 ...RED, ALPHA, 
-     
-    // 1st Layer 3rd Face (Blue)
-     1,                 -1,                  1,                 ...BLUE, ALPHA, 
-     0,                 -PHI,                RECIPROCAL_OF_PHI, ...BLUE, ALPHA, 
-     0,                 -PHI,               -RECIPROCAL_OF_PHI, ...BLUE, ALPHA, 
-     1,                 -1,                 -1,                 ...BLUE, ALPHA, 
-     PHI,               -RECIPROCAL_OF_PHI,  0,                 ...BLUE, ALPHA, 
-     
-    // 1st Layer 4th Face (Yellow)
-     -1,                -1,                  1,                 ...YELLOW, ALPHA, 
-     -PHI,              -RECIPROCAL_OF_PHI,  0,                 ...YELLOW, ALPHA, 
-     -1,                -1,                 -1,                 ...YELLOW, ALPHA, 
-      0,                -PHI,               -RECIPROCAL_OF_PHI, ...YELLOW, ALPHA, 
-      0,                -PHI,                RECIPROCAL_OF_PHI, ...YELLOW, ALPHA, 
-
-    // 1st Layer 5th Face (Purple)
-    -PHI,                RECIPROCAL_OF_PHI,  0,                 ...PURPLE, ALPHA, 
-    -1,                  1,                 -1,                 ...PURPLE, ALPHA, 
-    -RECIPROCAL_OF_PHI,  0,                 -PHI,               ...PURPLE, ALPHA, 
-    -1,                 -1,                 -1,                 ...PURPLE, ALPHA, 
-    -PHI,               -RECIPROCAL_OF_PHI,  0,                 ...PURPLE, ALPHA, 
-
-    // 2nd Layer 1st Face (Light Green)
-     0,                 -PHI,                RECIPROCAL_OF_PHI, ...LIGHT_GREEN, ALPHA, 
-    -1,                 -1,                  1,                 ...LIGHT_GREEN, ALPHA, 
-    -RECIPROCAL_OF_PHI,  0,                  PHI,               ...LIGHT_GREEN, ALPHA, 
-     RECIPROCAL_OF_PHI,  0,                  PHI,               ...LIGHT_GREEN, ALPHA, 
-     1,                 -1,                  1,                 ...LIGHT_GREEN, ALPHA, 
-     
-    // 2nd Layer 2nd Face (Orange)
-    -PHI,               -RECIPROCAL_OF_PHI,  0,                 ...ORANGE, ALPHA, 
-    -PHI,                RECIPROCAL_OF_PHI,  0,                 ...ORANGE, ALPHA, 
-    -1,                  1,                  1,                 ...ORANGE, ALPHA, 
-    -RECIPROCAL_OF_PHI,  0,                  PHI,               ...ORANGE, ALPHA, 
-    -1,                 -1,                  1,                 ...ORANGE, ALPHA, 
-    
-    // 2nd Layer 3rd Face (Light Blue)
-    -1,                  1,                 -1,                 ...LIGHT_BLUE, ALPHA, 
-    -PHI,                RECIPROCAL_OF_PHI,  0,                 ...LIGHT_BLUE, ALPHA, 
-    -1,                  1,                  1,                 ...LIGHT_BLUE, ALPHA, 
-     0,                  PHI,                RECIPROCAL_OF_PHI, ...LIGHT_BLUE, ALPHA, 
-     0,                  PHI,               -RECIPROCAL_OF_PHI, ...LIGHT_BLUE, ALPHA, 
-     
-    // 2nd Layer 4th Face (Beige)
-     1,                  1,                 -1,                 ...BEIGE, ALPHA, 
-     0,                  PHI,               -RECIPROCAL_OF_PHI, ...BEIGE, ALPHA, 
-     0,                  PHI,                RECIPROCAL_OF_PHI, ...BEIGE, ALPHA, 
-     1,                  1,                  1,                 ...BEIGE, ALPHA, 
-     PHI,                RECIPROCAL_OF_PHI,  0,                 ...BEIGE, ALPHA, 
-     
-    // 2nd Layer 5th Face (Pink)
-     PHI,               -RECIPROCAL_OF_PHI,  0,                 ...PINK, ALPHA, 
-     1,                 -1,                  1,                 ...PINK, ALPHA, 
-     RECIPROCAL_OF_PHI,  0,                  PHI,               ...PINK, ALPHA, 
-     1,                  1,                  1,                 ...PINK, ALPHA, 
-     PHI,                RECIPROCAL_OF_PHI,  0,                 ...PINK, ALPHA, 
-     
-    // Top Face (Gray)
-     0,                  PHI,                RECIPROCAL_OF_PHI, ...GRAY, ALPHA, 
-     1,                  1,                  1,                 ...GRAY, ALPHA, 
-     RECIPROCAL_OF_PHI,  0,                  PHI,               ...GRAY, ALPHA, 
-    -RECIPROCAL_OF_PHI,  0,                  PHI,               ...GRAY, ALPHA, 
-    -1,                  1,                  1,                 ...GRAY, ALPHA, 
-  ];
-
-  const DODECAHEDRON_INDEXES = [
-    // Bottom Face
-    0, 1, 2, 
-    0, 2, 1, 
-    0, 3, 4, 
-    0, 4, 3, 
-    0, 2, 3, 
-    0, 3, 2, 
-
-    // 1st Layer 1st
-    5 + 0, 5 + 1, 5 + 2, 
-    5 + 0, 5 + 2, 5 + 1, 
-    5 + 0, 5 + 3, 5 + 4, 
-    5 + 0, 5 + 4, 5 + 3, 
-    5 + 0, 5 + 2, 5 + 3, 
-    5 + 0, 5 + 3, 5 + 2, 
-
-    // 1st Layer 2nd
-    10 + 0, 10 + 1, 10 + 2, 
-    10 + 0, 10 + 2, 10 + 1, 
-    10 + 0, 10 + 3, 10 + 4, 
-    10 + 0, 10 + 4, 10 + 3, 
-    10 + 0, 10 + 2, 10 + 3, 
-    10 + 0, 10 + 3, 10 + 2, 
-
-    // 1st Layer 3rd
-    15 + 0, 15 + 1, 15 + 2, 
-    15 + 0, 15 + 2, 15 + 1, 
-    15 + 0, 15 + 3, 15 + 4, 
-    15 + 0, 15 + 4, 15 + 3, 
-    15 + 0, 15 + 2, 15 + 3, 
-    15 + 0, 15 + 3, 15 + 2, 
-
-    // 1st Layer 4th
-    20 + 0, 20 + 1, 20 + 2, 
-    20 + 0, 20 + 2, 20 + 1, 
-    20 + 0, 20 + 3, 20 + 4, 
-    20 + 0, 20 + 4, 20 + 3, 
-    20 + 0, 20 + 2, 20 + 3, 
-    20 + 0, 20 + 3, 20 + 2, 
-
-    // 1st Layer 5th
-    25 + 0, 25 + 1, 25 + 2, 
-    25 + 0, 25 + 2, 25 + 1, 
-    25 + 0, 25 + 3, 25 + 4, 
-    25 + 0, 25 + 4, 25 + 3, 
-    25 + 0, 25 + 2, 25 + 3, 
-    25 + 0, 25 + 3, 25 + 2, 
-
-    // 2nd Layer 1st
-    30 + 0, 30 + 1, 30 + 2, 
-    30 + 0, 30 + 2, 30 + 1, 
-    30 + 0, 30 + 3, 30 + 4, 
-    30 + 0, 30 + 4, 30 + 3, 
-    30 + 0, 30 + 2, 30 + 3, 
-    30 + 0, 30 + 3, 30 + 2, 
-
-    // 2nd Layer 2nd
-    35 + 0, 35 + 1, 35 + 2, 
-    35 + 0, 35 + 2, 35 + 1, 
-    35 + 0, 35 + 3, 35 + 4, 
-    35 + 0, 35 + 4, 35 + 3, 
-    35 + 0, 35 + 2, 35 + 3, 
-    35 + 0, 35 + 3, 35 + 2, 
-    
-    // 2nd Layer 3rd
-    40 + 0, 40 + 1, 40 + 2, 
-    40 + 0, 40 + 2, 40 + 1, 
-    40 + 0, 40 + 3, 40 + 4, 
-    40 + 0, 40 + 4, 40 + 3, 
-    40 + 0, 40 + 2, 40 + 3, 
-    40 + 0, 40 + 3, 40 + 2, 
-
-    // 2nd Layer 4th
-    45 + 0, 45 + 1, 45 + 2, 
-    45 + 0, 45 + 2, 45 + 1, 
-    45 + 0, 45 + 3, 45 + 4, 
-    45 + 0, 45 + 4, 45 + 3, 
-    45 + 0, 45 + 2, 45 + 3, 
-    45 + 0, 45 + 3, 45 + 2, 
-
-    // 2nd Layer 5th
-    50 + 0, 50 + 1, 50 + 2, 
-    50 + 0, 50 + 2, 50 + 1, 
-    50 + 0, 50 + 3, 50 + 4, 
-    50 + 0, 50 + 4, 50 + 3, 
-    50 + 0, 50 + 2, 50 + 3, 
-    50 + 0, 50 + 3, 50 + 2, 
-
-    // Top
-    55 + 0, 55 + 1, 55 + 2, 
-    55 + 0, 55 + 2, 55 + 1, 
-    55 + 0, 55 + 3, 55 + 4, 
-    55 + 0, 55 + 4, 55 + 3, 
-    55 + 0, 55 + 2, 55 + 3, 
-    55 + 0, 55 + 3, 55 + 2, 
-  ];
-
   const DODECAHEDRON_VERTEX_BUFFER_OBJECT = GL.createBuffer();
   GL.bindBuffer(GL.ARRAY_BUFFER, DODECAHEDRON_VERTEX_BUFFER_OBJECT);
   GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(DODECAHEDRON_VERTEXES), GL.STATIC_DRAW);
@@ -341,7 +115,8 @@ window.onload = async () => {
   let matrixWorld = identity();
   let matrixView = identity();
   let matrixProjection = identity();
-  lookAt(matrixView, [0, 0, -5], [0, 0, 0], [0, 1, 0]);
+
+  lookAt(matrixView, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
   perspective(matrixProjection, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
 
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
@@ -352,16 +127,20 @@ window.onload = async () => {
 
   let matrixRotationX = new Float32Array(16);
   let matrixRotationY = new Float32Array(16);
+  let matrixRotationZ = new Float32Array(16);
 
   let angle = 0;
 
   const loop = () => {
-    angle = performance.now() / 1000 / 6 * 2 * Math.PI;
+    angle = performance.now() / 1000 / 6 * 2 * Math.PI * ONE;
 
-    rotate(matrixRotationY, matrixIdentity, angle, [0, 1, 0]);
     rotate(matrixRotationX, matrixIdentity, angle / 4, [1, 0, 0]);
-
+    rotate(matrixRotationY, matrixIdentity, angle / 1, [0, 1, 0]);
+    rotate(matrixRotationZ, matrixIdentity, angle / 2, [0, 0, 1]);
+    
     multiply(matrixWorld, matrixRotationY, matrixRotationX);
+    multiply(matrixWorld, matrixWorld, matrixRotationZ);
+    
     GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
 
     resetCanvasDimension();
