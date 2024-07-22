@@ -48,12 +48,12 @@ window.onload = async () => {
   const VERTEX_SHADER = GL.createShader(GL.VERTEX_SHADER);
   const FRAGMENT_SHADER = GL.createShader(GL.FRAGMENT_SHADER);
 
-  const VERTEX_SHADER_LOCATION = `../shaders/new/vertex.glsl`;
-  const FRAGMENT_SHADER_LOCATION = `../shaders/new/fragment.glsl`;
+  let VERTEX_SHADER_LOCATION = `./../shaders/new/vertex.glsl`;
+  let FRAGMENT_SHADER_LOCATION = `./../shaders/new/fragment.glsl`;
 
   if (GL instanceof WebGLRenderingContext) {
-    VERTEX_SHADER_LOCATION = `../shaders/old/vertex.glsl`;
-    FRAGMENT_SHADER_LOCATION = `../shaders/old/fragment.glsl`;
+    VERTEX_SHADER_LOCATION = `./../shaders/old/vertex.glsl`;
+    FRAGMENT_SHADER_LOCATION = `./../shaders/old/fragment.glsl`;
   }
 
   const { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT } = await getShaderTexts(VERTEX_SHADER_LOCATION, FRAGMENT_SHADER_LOCATION);
