@@ -3,13 +3,13 @@
 precision lowp float;
 
 in vec3 vertPosition;
-in vec3 vertColor;
+in vec4 vertColor;
 
 uniform mat4 mWorld;
 uniform mat4 mView;
 uniform mat4 mProjection;
 
-out vec3 fragColor;
+out vec4 fragColor;
 
 void main() {
   fragColor = vertColor;

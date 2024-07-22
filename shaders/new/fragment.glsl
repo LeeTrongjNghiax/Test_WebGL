@@ -2,9 +2,9 @@
 
 precision lowp float;
 
-in vec3 fragColor;
+in vec4 fragColor;
 out vec4 outFragColor;
 
 void main() {
-  outFragColor = vec4(fragColor, 1.);
+  outFragColor = fragColor;
 }
