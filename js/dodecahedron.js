@@ -1,5 +1,3 @@
-const SCALE = 1.;
-
 let FACES = [];
 
 FACES.push(
@@ -160,12 +158,12 @@ FACES.push(
   ), 
 );
 
-const DODECAHEDRON_VERTEXES = [];
+let DODECAHEDRON_VERTEXES = [];
 
 for (let i = 0; i < FACES.length; i++) 
   DODECAHEDRON_VERTEXES.push(...FACES[i].toString()); 
 
-const DODECAHEDRON_INDEXES = [];
+let DODECAHEDRON_INDEXES = [];
 
 for (let i = 0; i < FACES.length * NUM_OF_EDGE_IN_PENTAGON; i += NUM_OF_EDGE_IN_PENTAGON) 
   DODECAHEDRON_INDEXES.push(
@@ -176,3 +174,7 @@ for (let i = 0; i < FACES.length * NUM_OF_EDGE_IN_PENTAGON; i += NUM_OF_EDGE_IN_
     i, i + 2, i + 3,
     i, i + 3, i + 2,
   );
+
+const DODECAHEDRON_INDEXES_LENGTH = DODECAHEDRON_INDEXES.length;
+
+FACES = [];

@@ -79,9 +79,13 @@ window.onload = async () => {
   GL.bindBuffer(GL.ARRAY_BUFFER, DODECAHEDRON_VERTEX_BUFFER_OBJECT);
   GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(DODECAHEDRON_VERTEXES), GL.STATIC_DRAW);
 
+  DODECAHEDRON_VERTEXES = [];
+
   const DODECAHEDRON_INDEX_BUFFER_OBJECT = GL.createBuffer();
   GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, DODECAHEDRON_INDEX_BUFFER_OBJECT);
   GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(DODECAHEDRON_INDEXES), GL.STATIC_DRAW);
+
+  DODECAHEDRON_INDEXES = [];
 
   const POSITION_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertPosition`);
   const COLOR_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertColor`);
@@ -116,7 +120,7 @@ window.onload = async () => {
   let matrixView = identity();
   let matrixProjection = identity();
 
-  lookAt(matrixView, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
+  lookAt(matrixView, [0, 0, -5], [0, 0, 0], [0, 1, 0]);
   perspective(matrixProjection, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
 
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
@@ -132,7 +136,7 @@ window.onload = async () => {
   let angle = 0;
 
   const loop = () => {
-    angle = performance.now() / 1000 / 6 * 2 * Math.PI * ONE;
+    angle = performance.now() / 1000 / 6 * 2 * Math.PI * 1;
 
     rotate(matrixRotationX, matrixIdentity, angle / 4, [1, 0, 0]);
     rotate(matrixRotationY, matrixIdentity, angle / 1, [0, 1, 0]);
@@ -149,11 +153,12 @@ window.onload = async () => {
     GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT | GL.STENCIL_BUFFER_BIT);
 
     GL.drawArrays(GL.TRIANGLES, 0, 3);
-    GL.drawElements(GL.TRIANGLES, DODECAHEDRON_INDEXES.length, GL.UNSIGNED_SHORT, 0);
+    GL.drawElements(GL.TRIANGLES, DODECAHEDRON_INDEXES_LENGTH, GL.UNSIGNED_SHORT, 0);
 
     requestAnimationFrame(loop); 
   }
 
   loop();
-
 }
+
+appendMemoryUsageCounter();
