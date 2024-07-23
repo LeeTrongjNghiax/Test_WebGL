@@ -139,7 +139,7 @@ window.onload = async () => {
     rotate(matrixRotationZ, matrixIdentity, angle / 2, [0, 0, 1]);
     
     multiply(matrixWorld, matrixRotationY, matrixRotationX);
-    multiply(matrixWorld, matrixWorld, matrixRotationZ);
+    // multiply(matrixWorld, matrixWorld, matrixRotationZ);
     
     GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
 

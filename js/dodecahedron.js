@@ -1,14 +1,16 @@
+const SCALE = 1.;
+
 let FACES = [];
 
 FACES.push(
   // Bottom Face (White)
   new Face(
     [
-      new Vertex(new Position(0, -PHI, -RECIPROCAL_OF_PHI), new Color(...WHITE)),
-      new Vertex(new Position(1, -1, -1),                   new Color(...WHITE)),
-      new Vertex(new Position(RECIPROCAL_OF_PHI, 0, -PHI),  new Color(...WHITE)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0, -PHI), new Color(...WHITE)),
-      new Vertex(new Position(-1, -1, -1),                  new Color(...WHITE)),
+      new Vertex(new Position(0, -PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE), new Color(...WHITE)),
+      new Vertex(new Position(SCALE, -SCALE, -SCALE),                       new Color(...WHITE)),
+      new Vertex(new Position(RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE),  new Color(...WHITE)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE), new Color(...WHITE)),
+      new Vertex(new Position(-SCALE, -SCALE, -SCALE),                      new Color(...WHITE)),
     ],
     new Position(),
     new Color(...WHITE)
@@ -17,11 +19,11 @@ FACES.push(
   // 1st Layer 1st Face (Green)
   new Face(
     [
-      new Vertex(new Position(0, PHI, -RECIPROCAL_OF_PHI),  new Color(...GREEN)),
-      new Vertex(new Position(1, 1, -1),                    new Color(...GREEN)),
-      new Vertex(new Position(RECIPROCAL_OF_PHI, 0, -PHI),  new Color(...GREEN)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0, -PHI), new Color(...GREEN)),
-      new Vertex(new Position(-1, 1, -1),                   new Color(...GREEN)),
+      new Vertex(new Position(0, PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE),  new Color(...GREEN)),
+      new Vertex(new Position(SCALE, SCALE, -SCALE),                        new Color(...GREEN)),
+      new Vertex(new Position(RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE),  new Color(...GREEN)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE), new Color(...GREEN)),
+      new Vertex(new Position(-SCALE, SCALE, -SCALE),                       new Color(...GREEN)),
     ],
     new Position(),
     new Color(...GREEN)
@@ -30,11 +32,11 @@ FACES.push(
   // 1st Layer 2nd Face (Red)
   new Face(
     [
-      new Vertex(new Position(PHI, RECIPROCAL_OF_PHI, 0),   new Color(...RED)),
-      new Vertex(new Position(PHI, -RECIPROCAL_OF_PHI, 0),  new Color(...RED)),
-      new Vertex(new Position(1, -1, -1),                   new Color(...RED)),
-      new Vertex(new Position(RECIPROCAL_OF_PHI, 0, -PHI),  new Color(...RED)),
-      new Vertex(new Position(1, 1, -1),                    new Color(...RED)),
+      new Vertex(new Position(PHI * SCALE, RECIPROCAL_OF_PHI * SCALE, 0),   new Color(...RED)),
+      new Vertex(new Position(PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0),  new Color(...RED)),
+      new Vertex(new Position(SCALE, -SCALE, -SCALE),                       new Color(...RED)),
+      new Vertex(new Position(RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE),  new Color(...RED)),
+      new Vertex(new Position(SCALE, SCALE, -SCALE),                        new Color(...RED)),
     ],
     new Position(),
     new Color(...RED)
@@ -43,11 +45,11 @@ FACES.push(
   // 1st Layer 3rd Face (Blue)
   new Face(
     [
-      new Vertex(new Position(1, -1, 1),                    new Color(...BLUE)),
-      new Vertex(new Position(0, -PHI, RECIPROCAL_OF_PHI),  new Color(...BLUE)),
-      new Vertex(new Position(0, -PHI, -RECIPROCAL_OF_PHI), new Color(...BLUE)),
-      new Vertex(new Position(1, -1, -1),                   new Color(...BLUE)),
-      new Vertex(new Position(PHI, -RECIPROCAL_OF_PHI, 0),  new Color(...BLUE)),
+      new Vertex(new Position(SCALE, -SCALE, SCALE),                        new Color(...BLUE)),
+      new Vertex(new Position(0, -PHI * SCALE, RECIPROCAL_OF_PHI * SCALE),  new Color(...BLUE)),
+      new Vertex(new Position(0, -PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE), new Color(...BLUE)),
+      new Vertex(new Position(SCALE, -SCALE, -SCALE),                       new Color(...BLUE)),
+      new Vertex(new Position(PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0),  new Color(...BLUE)),
     ],
     new Position(),
     new Color(...BLUE)
@@ -56,11 +58,11 @@ FACES.push(
   // 1st Layer 4th Face (Yellow)
   new Face(
     [
-      new Vertex(new Position(-1, -1, 1),                   new Color(...YELLOW)),
-      new Vertex(new Position(-PHI, -RECIPROCAL_OF_PHI, 0), new Color(...YELLOW)),
-      new Vertex(new Position(-1, -1, -1),                  new Color(...YELLOW)),
-      new Vertex(new Position(0, -PHI, -RECIPROCAL_OF_PHI), new Color(...YELLOW)),
-      new Vertex(new Position(0, -PHI, RECIPROCAL_OF_PHI),  new Color(...YELLOW)),
+      new Vertex(new Position(-SCALE, -SCALE, SCALE),                       new Color(...YELLOW)),
+      new Vertex(new Position(-PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0), new Color(...YELLOW)),
+      new Vertex(new Position(-SCALE, -SCALE, -SCALE),                      new Color(...YELLOW)),
+      new Vertex(new Position(0, -PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE), new Color(...YELLOW)),
+      new Vertex(new Position(0, -PHI * SCALE, RECIPROCAL_OF_PHI * SCALE),  new Color(...YELLOW)),
     ],
     new Position(),
     new Color(...YELLOW)
@@ -69,11 +71,11 @@ FACES.push(
   // 1st Layer 5th Face (Purple)
   new Face(
     [
-      new Vertex(new Position(-PHI, RECIPROCAL_OF_PHI, 0),  new Color(...PURPLE)),
-      new Vertex(new Position(-1, 1, -1),                   new Color(...PURPLE)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0, -PHI), new Color(...PURPLE)),
-      new Vertex(new Position(-1, -1, -1),                  new Color(...PURPLE)),
-      new Vertex(new Position(-PHI, -RECIPROCAL_OF_PHI, 0), new Color(...PURPLE)),
+      new Vertex(new Position(-PHI * SCALE, RECIPROCAL_OF_PHI * SCALE, 0),  new Color(...PURPLE)),
+      new Vertex(new Position(-SCALE, SCALE, -SCALE),                       new Color(...PURPLE)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, -PHI * SCALE), new Color(...PURPLE)),
+      new Vertex(new Position(-SCALE, -SCALE, -SCALE),                      new Color(...PURPLE)),
+      new Vertex(new Position(-PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0), new Color(...PURPLE)),
     ],
     new Position(),
     new Color(...PURPLE)
@@ -82,11 +84,11 @@ FACES.push(
   // 2nd Layer 1st Face (Light Green)
   new Face(
     [
-      new Vertex(new Position(0, -PHI, RECIPROCAL_OF_PHI),  new Color(...LIGHT_GREEN)),
-      new Vertex(new Position(-1, -1, 1),                   new Color(...LIGHT_GREEN)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0,  PHI), new Color(...LIGHT_GREEN)),
-      new Vertex(new Position( RECIPROCAL_OF_PHI, 0,  PHI), new Color(...LIGHT_GREEN)),
-      new Vertex(new Position(1, -1, 1),                    new Color(...LIGHT_GREEN)),
+      new Vertex(new Position(0, -PHI * SCALE, RECIPROCAL_OF_PHI * SCALE),  new Color(...LIGHT_GREEN)),
+      new Vertex(new Position(-SCALE, -SCALE, SCALE),                       new Color(...LIGHT_GREEN)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),  new Color(...LIGHT_GREEN)),
+      new Vertex(new Position( RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),  new Color(...LIGHT_GREEN)),
+      new Vertex(new Position(SCALE, -SCALE, SCALE),                        new Color(...LIGHT_GREEN)),
     ],
     new Position(),
     new Color(...LIGHT_GREEN)
@@ -95,11 +97,11 @@ FACES.push(
   // 2nd Layer 2nd Face (Orange)
   new Face(
     [
-      new Vertex(new Position(-PHI, -RECIPROCAL_OF_PHI, 0), new Color(...ORANGE)),
-      new Vertex(new Position(-PHI,  RECIPROCAL_OF_PHI, 0), new Color(...ORANGE)),
-      new Vertex(new Position(-1, 1, 1),                    new Color(...ORANGE)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0,  PHI), new Color(...ORANGE)),
-      new Vertex(new Position(-1, -1, 1),                   new Color(...ORANGE)),
+      new Vertex(new Position(-PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0), new Color(...ORANGE)),
+      new Vertex(new Position(-PHI * SCALE,  RECIPROCAL_OF_PHI * SCALE, 0), new Color(...ORANGE)),
+      new Vertex(new Position(-SCALE, SCALE, SCALE),                        new Color(...ORANGE)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),  new Color(...ORANGE)),
+      new Vertex(new Position(-SCALE, -SCALE, SCALE),                       new Color(...ORANGE)),
     ],
     new Position(),
     new Color(...ORANGE)
@@ -108,11 +110,11 @@ FACES.push(
   // 2nd Layer 3rd Face (Light Blue)
   new Face(
     [
-      new Vertex(new Position(-1, 1, -1),                  new Color(...LIGHT_BLUE)),
-      new Vertex(new Position(-PHI, RECIPROCAL_OF_PHI, 0), new Color(...LIGHT_BLUE)),
-      new Vertex(new Position(-1, 1, 1),                   new Color(...LIGHT_BLUE)),
-      new Vertex(new Position(0, PHI, RECIPROCAL_OF_PHI),  new Color(...LIGHT_BLUE)),
-      new Vertex(new Position(0, PHI, -RECIPROCAL_OF_PHI), new Color(...LIGHT_BLUE)),
+      new Vertex(new Position(-SCALE, SCALE, -SCALE),                       new Color(...LIGHT_BLUE)),
+      new Vertex(new Position(-PHI * SCALE, RECIPROCAL_OF_PHI * SCALE, 0),  new Color(...LIGHT_BLUE)),
+      new Vertex(new Position(-SCALE, SCALE, SCALE),                        new Color(...LIGHT_BLUE)),
+      new Vertex(new Position(0, PHI * SCALE,  RECIPROCAL_OF_PHI * SCALE),  new Color(...LIGHT_BLUE)),
+      new Vertex(new Position(0, PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE),  new Color(...LIGHT_BLUE)),
     ],
     new Position(),
     new Color(...LIGHT_BLUE)
@@ -121,11 +123,11 @@ FACES.push(
   // 2nd Layer 4th Face (Beige)
   new Face(
     [
-      new Vertex(new Position(1, 1, -1),                   new Color(...BEIGE)),
-      new Vertex(new Position(0, PHI, -RECIPROCAL_OF_PHI), new Color(...BEIGE)),
-      new Vertex(new Position(0, PHI, RECIPROCAL_OF_PHI),  new Color(...BEIGE)),
-      new Vertex(new Position(1, 1, 1),                    new Color(...BEIGE)),
-      new Vertex(new Position(PHI, RECIPROCAL_OF_PHI, 0),  new Color(...BEIGE)),
+      new Vertex(new Position(SCALE, SCALE, -SCALE),                        new Color(...BEIGE)),
+      new Vertex(new Position(0, PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE),  new Color(...BEIGE)),
+      new Vertex(new Position(0, PHI * SCALE, RECIPROCAL_OF_PHI * SCALE),   new Color(...BEIGE)),
+      new Vertex(new Position(SCALE, SCALE, SCALE),                         new Color(...BEIGE)),
+      new Vertex(new Position(PHI * SCALE, RECIPROCAL_OF_PHI * SCALE, 0),   new Color(...BEIGE)),
     ],
     new Position(),
     new Color(...LIGHT_BLUE)
@@ -134,11 +136,11 @@ FACES.push(
   // 2nd Layer 5th Face (Pink)
   new Face(
     [
-      new Vertex(new Position(PHI, -RECIPROCAL_OF_PHI, 0), new Color(...PINK)),
-      new Vertex(new Position(1, -1, 1),                   new Color(...PINK)),
-      new Vertex(new Position(RECIPROCAL_OF_PHI, 0, PHI),  new Color(...PINK)),
-      new Vertex(new Position(1, 1, 1),                    new Color(...PINK)),
-      new Vertex(new Position(PHI, RECIPROCAL_OF_PHI, 0),  new Color(...PINK)),
+      new Vertex(new Position(PHI * SCALE, -RECIPROCAL_OF_PHI * SCALE, 0),  new Color(...PINK)),
+      new Vertex(new Position(SCALE, -SCALE, SCALE),                        new Color(...PINK)),
+      new Vertex(new Position(RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),   new Color(...PINK)),
+      new Vertex(new Position(SCALE, SCALE, SCALE),                         new Color(...PINK)),
+      new Vertex(new Position(PHI * SCALE, RECIPROCAL_OF_PHI * SCALE, 0),   new Color(...PINK)),
     ],
     new Position(),
     new Color(...PINK)
@@ -147,11 +149,11 @@ FACES.push(
   // Top Face (Gray)
   new Face(
     [
-      new Vertex(new Position(0, PHI, RECIPROCAL_OF_PHI),  new Color(...GRAY)),
-      new Vertex(new Position(1, 1, 1),                    new Color(...GRAY)),
-      new Vertex(new Position(RECIPROCAL_OF_PHI, 0, PHI),  new Color(...GRAY)),
-      new Vertex(new Position(-RECIPROCAL_OF_PHI, 0, PHI), new Color(...GRAY)),
-      new Vertex(new Position(-1, 1, 1),                   new Color(...GRAY)),
+      new Vertex(new Position(0, PHI * SCALE, RECIPROCAL_OF_PHI * SCALE),   new Color(...GRAY)),
+      new Vertex(new Position(SCALE, SCALE, SCALE),                         new Color(...GRAY)),
+      new Vertex(new Position(RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),   new Color(...GRAY)),
+      new Vertex(new Position(-RECIPROCAL_OF_PHI * SCALE, 0, PHI * SCALE),  new Color(...GRAY)),
+      new Vertex(new Position(-SCALE, SCALE, SCALE),                        new Color(...GRAY)),
     ],
     new Position(),
     new Color(...GRAY)
