@@ -1,6 +1,6 @@
-let FACES = [];
+let DODECAHEDRON_FACES = [];
 
-FACES.push(
+DODECAHEDRON_FACES.push(
   // Bottom Face (White)
   new Face(
     [
@@ -160,12 +160,12 @@ FACES.push(
 
 let DODECAHEDRON_VERTEXES = [];
 
-for (let i = 0; i < FACES.length; i++) 
-  DODECAHEDRON_VERTEXES.push(...FACES[i].toString()); 
+for (let i = 0; i < DODECAHEDRON_FACES.length; i++) 
+  DODECAHEDRON_VERTEXES.push(...DODECAHEDRON_FACES[i].toString()); 
 
 let DODECAHEDRON_INDEXES = [];
 
-for (let i = 0; i < FACES.length * NUM_OF_EDGE_IN_PENTAGON; i += NUM_OF_EDGE_IN_PENTAGON) 
+for (let i = 0; i < DODECAHEDRON_FACES.length * NUM_OF_EDGE_IN_PENTAGON; i += NUM_OF_EDGE_IN_PENTAGON) 
   DODECAHEDRON_INDEXES.push(
     i, i + 1, i + 2,
     i, i + 2, i + 1,
@@ -177,4 +177,4 @@ for (let i = 0; i < FACES.length * NUM_OF_EDGE_IN_PENTAGON; i += NUM_OF_EDGE_IN_
 
 const DODECAHEDRON_INDEXES_LENGTH = DODECAHEDRON_INDEXES.length;
 
-FACES = [];
+DODECAHEDRON_FACES = [];
