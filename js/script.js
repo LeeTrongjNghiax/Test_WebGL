@@ -120,7 +120,7 @@ window.onload = async () => {
   let matrixView = identity();
   let matrixProjection = identity();
 
-  lookAt(matrixView, [0, 0, -5], [0, 0, 0], [0, 1, 0]);
+  lookAt(matrixView, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
   perspective(matrixProjection, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
 
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
@@ -140,7 +140,7 @@ window.onload = async () => {
 
     rotate(matrixRotationX, matrixIdentity, angle / 4, [1, 0, 0]);
     rotate(matrixRotationY, matrixIdentity, angle / 1, [0, 1, 0]);
-    rotate(matrixRotationZ, matrixIdentity, angle / 2, [0, 0, 1]);
+    // rotate(matrixRotationZ, matrixIdentity, angle / 2, [0, 0, 1]);
     
     multiply(matrixWorld, matrixRotationY, matrixRotationX);
     // multiply(matrixWorld, matrixWorld, matrixRotationZ);

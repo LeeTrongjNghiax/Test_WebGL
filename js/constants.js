@@ -2,8 +2,8 @@ const NUM_OF_EDGE_IN_PENTAGON = 5;
 
 const PHI = (1 + NUM_OF_EDGE_IN_PENTAGON ** (1 / 2)) / 2;
 const RECIPROCAL_OF_PHI = 1 / PHI;
-const ALPHA = 1.;
-const SCALE = .25;
+const ALPHA = 0.5;
+const SCALE = 1.;
 
 const WHITE       = [1., 1., 1., ALPHA];
 const GREEN       = [0., .5, 0., ALPHA];

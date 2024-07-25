@@ -24,7 +24,7 @@
   </canvas>
 
   <script id="vs" type="x-shader/x-vertex">
-    precision mediump float;
+    precision lowp float;
 
     attribute vec3 vertPosition;
     attribute vec3 vertColor;
@@ -42,7 +42,7 @@
   </script>
 
   <script id="fs" type="x-shader/x-fragment">
-    precision mediump float;
+    precision lowp float;
 
     varying vec3 fragColor;
 
