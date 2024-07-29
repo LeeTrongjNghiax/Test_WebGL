@@ -20,8 +20,8 @@ void main() {
   
   // Apply lighting effect
 
-  vec3 ambientLight = vec3(.99, .99, .0);
-  vec3 directionalLightColor = vec3(.99, .99, .0);
+  vec3 ambientLight = vec3(.5, .5, .5);
+  vec3 directionalLightColor = vec3(.99, .99, .99);
   vec3 directionalVector = normalize(vec3(.85, .8, .75));
 
   vec4 transformedNormal = uNormalMatrix * vec4(vertNormal, 1.0);
