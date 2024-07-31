@@ -157,9 +157,9 @@ window.onload = async () => {
 
   DODECAHEDRON_INDEXES = [];
 
-  const POSITION_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertPosition`);
-  const COLOR_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertColor`);
-  const NORMAL_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertNormal`);
+  const POSITION_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertPosition`);
+  const COLOR_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertColor`);
+  const NORMAL_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertNormal`);
   // const TEXTURE_COORDINATE_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertTextureCoordinate`);
 
   GL.vertexAttribPointer(
@@ -223,23 +223,36 @@ window.onload = async () => {
 
   GL.useProgram(PROGRAM);
 
-  const UNIFORM_MAT_LOCATION_WORLD = GL.getUniformLocation(PROGRAM, `mWorld`);
-  const UNIFORM_MAT_LOCATION_VIEW = GL.getUniformLocation(PROGRAM, `mView`);
-  const UNIFORM_MAT_LOCATION_PROJECTION = GL.getUniformLocation(PROGRAM, `mProjection`);
-  const UNIFORM_MAT_LOCATION_NORMAL = GL.getUniformLocation(PROGRAM, `uNormalMatrix`);
+  const UNIFORM_MAT_LOCATION_WORLD = GL.getUniformLocation(PROGRAM, `uWorld`);
+  const UNIFORM_MAT_LOCATION_VIEW = GL.getUniformLocation(PROGRAM, `uView`);
+  const UNIFORM_MAT_LOCATION_PROJECTION = GL.getUniformLocation(PROGRAM, `uProjection`);
+  const UNIFORM_MAT_LOCATION_NORMAL = GL.getUniformLocation(PROGRAM, `uNormal`);
+  const UNIFORM_VEC_LOCATION_AMBIENT_LIGHT_COLOR = GL.getUniformLocation(PROGRAM, `uAmbientLightColor`);
+  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR = GL.getUniformLocation(PROGRAM, `uDirectionalLightColor`);
+  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR = GL.getUniformLocation(PROGRAM, `uDirectionalLightVector`);
 
-  let matrixWorld = mat4.create();
-  let matrixView = mat4.create();
-  let matrixProjection = mat4.create();
-  const normalMatrix = mat4.create();
+  const MATRIX_WORLD = mat4.create();
 
-  mat4.lookAt(matrixView, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
-  mat4.perspective(matrixProjection, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
+  const MATRIX_VIEW = mat4.create();
+  mat4.lookAt(MATRIX_VIEW, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
 
-  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
-  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_VIEW, GL.FALSE, matrixView);
-  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_PROJECTION, GL.FALSE, matrixProjection);
-  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_NORMAL, GL.FALSE, normalMatrix);
+  const MATRIX_PROJECTION = mat4.create();
+  mat4.perspective(MATRIX_PROJECTION, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
+
+  const MATRIX_NORMAL = mat4.create();
+  const AMBIENT_LIGHT_COLOR = new Float32Array([.99, .0, .99]);
+  const DIRECTIONAL_LIGHT_COLOR = new Float32Array([.99, .99, .99]);
+  const DIRECTIONAL_LIGHT_VECTOR = new Float32Array([.85, .8, .75]);
+  vec3.normalize(DIRECTIONAL_LIGHT_VECTOR, DIRECTIONAL_LIGHT_VECTOR);
+
+  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, MATRIX_WORLD);
+  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_VIEW, GL.FALSE, MATRIX_VIEW);
+  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_PROJECTION, GL.FALSE, MATRIX_PROJECTION);
+  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_NORMAL, GL.FALSE, MATRIX_NORMAL);
+
+  GL.uniform3fv(UNIFORM_VEC_LOCATION_AMBIENT_LIGHT_COLOR, AMBIENT_LIGHT_COLOR);
+  GL.uniform3fv(UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR, DIRECTIONAL_LIGHT_COLOR);
+  GL.uniform3fv(UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR, DIRECTIONAL_LIGHT_VECTOR);
 
   const MATRIX_IDENTITY = mat4.create();
 
@@ -256,14 +269,14 @@ window.onload = async () => {
     mat4.rotate(MATRIX_ROTATION_Y, MATRIX_IDENTITY, angle / 1, [0, 1, 0]);
     // rotate(MATRIX_ROTATION_Z, MATRIX_IDENTITY, angle / 2, [0, 0, 1]);
     
-    mat4.multiply(matrixWorld, MATRIX_ROTATION_Y, MATRIX_ROTATION_X);
+    mat4.multiply(MATRIX_WORLD, MATRIX_ROTATION_Y, MATRIX_ROTATION_X);
     // multiply(matrixWorld, matrixWorld, MATRIX_ROTATION_Z);
 
-    mat4.invert(normalMatrix, matrixWorld);
-    mat4.transpose(normalMatrix, normalMatrix);
+    mat4.invert(MATRIX_NORMAL, MATRIX_WORLD);
+    mat4.transpose(MATRIX_NORMAL, MATRIX_NORMAL);
     
-    GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, matrixWorld);
-    GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_NORMAL, GL.FALSE, normalMatrix);
+    GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, MATRIX_WORLD);
+    GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_NORMAL, GL.FALSE, MATRIX_NORMAL);
 
     resetCanvasDimension();
 

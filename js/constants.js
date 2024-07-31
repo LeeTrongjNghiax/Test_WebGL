@@ -3,7 +3,7 @@ const NUM_OF_EDGE_IN_TRIANGLE = 3;
 
 const PHI = (1 + NUM_OF_EDGE_IN_PENTAGON ** (1 / 2)) / 2;
 const RECIPROCAL_OF_PHI = 1 / PHI;
-const ALPHA = .999;
+const ALPHA = .9;
 const SCALE = 1.;
 
 const WHITE       = [1., 1., 1., ALPHA];

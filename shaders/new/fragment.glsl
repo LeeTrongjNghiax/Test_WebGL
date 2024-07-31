@@ -1,11 +1,11 @@
 #version 300 es
 
-precision lowp float;
+precision highp float;
 
-in vec4 fragColor;
-in vec3 vVec3lighting;
+in vec4 oFragColor;
+in vec3 oLighting;
 out vec4 outFragColor;
 
 void main() {
-  outFragColor = vec4(fragColor.rgb * vVec3lighting, fragColor.a);
+  outFragColor = vec4(oFragColor.rgb * oLighting, oFragColor.a);
 }
