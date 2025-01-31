@@ -13,10 +13,14 @@ async function getShaderTexts(
 
     return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }
   } else {
-    const VERTEX_SHADER_RESPONSE = await fetch(vertexShaderLocation.substring(3));
+    const VERTEX_SHADER_RESPONSE = await fetch(
+      vertexShaderLocation.substring(3)
+    );
     const VERTEX_SHADER_TEXT = await VERTEX_SHADER_RESPONSE.text();
 
-    const FRAGMENT_SHADER_RESPONSE = await fetch(fragmentShaderLocation.substring(3));
+    const FRAGMENT_SHADER_RESPONSE = await fetch(
+      fragmentShaderLocation.substring(3)
+    );
     const FRAGMENT_SHADER_TEXT = await FRAGMENT_SHADER_RESPONSE.text();
 
     return { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT }

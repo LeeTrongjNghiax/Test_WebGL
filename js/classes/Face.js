@@ -20,9 +20,9 @@ class Face {
   toString2() {
     return [].concat(
       ...[].concat(
-        ...this.vertexes.map(e => {
-          return e.toString().concat(...this.getNormalVector())
-        })
+        ...this.vertexes.map(e => 
+          e.toString().concat(...this.getNormalVector())
+        )
       )
     );
   }

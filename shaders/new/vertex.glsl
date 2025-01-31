@@ -25,7 +25,10 @@ void main() {
   // Apply lighting effect
   vec4 transformedNormal = uNormalMatrix * vec4(iVertNormal, 1.0);
 
-  float directional = max(dot(transformedNormal.xyz, uDirectionalLightVector), 0.0);
+  float directional = max(
+    dot(transformedNormal.xyz, uDirectionalLightVector), 
+    0.0
+  );
 
   oLighting = uAmbientLightColor + (uDirectionalLightColor * directional);
 }

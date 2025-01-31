@@ -1,8 +1,8 @@
-precision lowp float;
+precision highp float;
 
-varying vec3 vVec3fragColor;
-varying vec3 vVec3Lighting;
+varying vec4 oFragColor;
+varying vec3 oLighting;
 
 void main() {
-  gl_FragColor = vec4(fragColor.rgb * vVec3Lighting, 1.);
+  gl_FragColor = vec4(oFragColor.rgb * oLighting, oFragColor.a);
 }

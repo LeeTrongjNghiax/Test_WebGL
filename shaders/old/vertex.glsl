@@ -1,31 +1,29 @@
-precision lowp float;
+precision highp float;
 
-attribute vec3 aVec3VertPosition;
-attribute vec3 aVec3VertColor;
-attribute vec3 aVec3VertNormal;
+attribute vec3 iVertPosition;
+attribute vec4 iVertColor;
+attribute vec3 iVertNormal;
 
-uniform mat4 uMat4NormalMatrix;
-uniform mat4 uMat4World;
-uniform mat4 uMat4View;
-uniform mat4 uMat4Projection;
+uniform mat4 uNormalMatrix;
+uniform mat4 uWorld;
+uniform mat4 uView;
+uniform mat4 uProjection;
 
-varying vec3 vVec3fragColor;
-varying vec3 vVec3lighting;
+uniform vec3 uAmbientLightColor;
+uniform vec3 uDirectionalLightColor;
+uniform vec3 uDirectionalLightVector;
+
+varying vec4 oFragColor;
+varying vec3 oLighting;
 
 void main() {
-  gl_Position = uMat4Projection * uMat4View * uMat4World * vec4(aVec3VertPosition, 1.);
-
-  vVec3fragColor = aVec3VertColor;
-
+  gl_Position = uProjection * uView * uWorld * vec4(iVertPosition, 1.);
+  oFragColor = iVertColor;
+  
   // Apply lighting effect
+  vec4 transformedNormal = uNormalMatrix * vec4(iVertNormal, 1.0);
 
-  vec3 ambientLight = vec3(.3, .3, .3);
-  vec3 directionalLightColor = vec3(.99, .99, .0);
-  vec3 directionalVector = normalize(vec3(.85, .8, .75));
+  float directional = max(dot(transformedNormal.xyz, uDirectionalLightVector), 0.0);
 
-  vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
-
-  float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
-
-  vVec3lighting = ambientLight + (directionalLightColor * directional);
+  oLighting = uAmbientLightColor + (uDirectionalLightColor * directional);
 }

@@ -39,7 +39,8 @@ window.onload = async () => {
     FRAGMENT_SHADER_LOCATION = `../shaders/old/fragment.glsl`;
   }
 
-  const { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT } = await getShaderTexts(VERTEX_SHADER_LOCATION, FRAGMENT_SHADER_LOCATION);
+  const { VERTEX_SHADER_TEXT, FRAGMENT_SHADER_TEXT } = 
+    await getShaderTexts(VERTEX_SHADER_LOCATION, FRAGMENT_SHADER_LOCATION);
   
   GL.shaderSource(VERTEX_SHADER, VERTEX_SHADER_TEXT);
   GL.shaderSource(FRAGMENT_SHADER, FRAGMENT_SHADER_TEXT);
@@ -48,12 +49,16 @@ window.onload = async () => {
   GL.compileShader(FRAGMENT_SHADER);
 
   if (!GL.getShaderParameter(VERTEX_SHADER, GL.COMPILE_STATUS)) {
-    console.error(`Error compiling vertex shader: `, GL.getShaderInfoLog(VERTEX_SHADER));
+    console.error(
+      `Error compiling vertex shader: `, GL.getShaderInfoLog(VERTEX_SHADER)
+    );
     return;
   }
 
   if (!GL.getShaderParameter(FRAGMENT_SHADER, GL.COMPILE_STATUS)) {
-    console.error(`Error compiling fragment shader: `, GL.getShaderInfoLog(FRAGMENT_SHADER));
+    console.error(
+      `Error compiling fragment shader: `, GL.getShaderInfoLog(FRAGMENT_SHADER)
+    );
     return;
   }
 
@@ -75,89 +80,108 @@ window.onload = async () => {
     return;
   }
 
-  const IMAGE = new Image();
-  IMAGE.src = './../img/grate0_thumb.png';
-  IMAGE.crossOrigin = 'anonymous';
+  // const IMAGE = new Image();
+  // IMAGE.src = './../img/grate0_thumb.png';
+  // IMAGE.crossOrigin = 'anonymous';
 
-  // var boxVertices = 
-	// [ // X, Y, Z           U, V
-	// 	// Top
-	// 	-1.0, 1.0, -1.0,   0, 0,
-	// 	-1.0, 1.0, 1.0,    0, 1,
-	// 	1.0, 1.0, 1.0,     1, 1,
-	// 	1.0, 1.0, -1.0,    1, 0,
+  var boxVertices = 
+	[ // X, Y, Z           U, V
+		// Top
+		-1.0, 1.0, -1.0,   0, 0,
+		-1.0, 1.0, 1.0,    0, 1,
+		1.0, 1.0, 1.0,     1, 1,
+		1.0, 1.0, -1.0,    1, 0,
 
-	// 	// Left
-	// 	-1.0, 1.0, 1.0,    0, 0,
-	// 	-1.0, -1.0, 1.0,   1, 0,
-	// 	-1.0, -1.0, -1.0,  1, 1,
-	// 	-1.0, 1.0, -1.0,   0, 1,
+		// Left
+		-1.0, 1.0, 1.0,    0, 0,
+		-1.0, -1.0, 1.0,   1, 0,
+		-1.0, -1.0, -1.0,  1, 1,
+		-1.0, 1.0, -1.0,   0, 1,
 
-	// 	// Right
-	// 	1.0, 1.0, 1.0,    1, 1,
-	// 	1.0, -1.0, 1.0,   0, 1,
-	// 	1.0, -1.0, -1.0,  0, 0,
-	// 	1.0, 1.0, -1.0,   1, 0,
+		// Right
+		1.0, 1.0, 1.0,    1, 1,
+		1.0, -1.0, 1.0,   0, 1,
+		1.0, -1.0, -1.0,  0, 0,
+		1.0, 1.0, -1.0,   1, 0,
 
-	// 	// Front
-	// 	1.0, 1.0, 1.0,    1, 1,
-	// 	1.0, -1.0, 1.0,    1, 0,
-	// 	-1.0, -1.0, 1.0,    0, 0,
-	// 	-1.0, 1.0, 1.0,    0, 1,
+		// Front
+		1.0, 1.0, 1.0,    1, 1,
+		1.0, -1.0, 1.0,    1, 0,
+		-1.0, -1.0, 1.0,    0, 0,
+		-1.0, 1.0, 1.0,    0, 1,
 
-	// 	// Back
-	// 	1.0, 1.0, -1.0,    0, 0,
-	// 	1.0, -1.0, -1.0,    0, 1,
-	// 	-1.0, -1.0, -1.0,    1, 1,
-	// 	-1.0, 1.0, -1.0,    1, 0,
+		// Back
+		1.0, 1.0, -1.0,    0, 0,
+		1.0, -1.0, -1.0,    0, 1,
+		-1.0, -1.0, -1.0,    1, 1,
+		-1.0, 1.0, -1.0,    1, 0,
 
-	// 	// Bottom
-	// 	-1.0, -1.0, -1.0,   1, 1,
-	// 	-1.0, -1.0, 1.0,    1, 0,
-	// 	1.0, -1.0, 1.0,     0, 0,
-	// 	1.0, -1.0, -1.0,    0, 1,
-	// ];
+		// Bottom
+		-1.0, -1.0, -1.0,   1, 1,
+		-1.0, -1.0, 1.0,    1, 0,
+		1.0, -1.0, 1.0,     0, 0,
+		1.0, -1.0, -1.0,    0, 1,
+	];
 
-	// var boxIndices =
-	// [
-	// 	// Top
-	// 	0, 1, 2,
-	// 	0, 2, 3,
+	var boxIndices =
+	[
+		// Top
+		0, 1, 2,
+		0, 2, 3,
 
-	// 	// Left
-	// 	5, 4, 6,
-	// 	6, 4, 7,
+		// Left
+		5, 4, 6,
+		6, 4, 7,
 
-	// 	// Right
-	// 	8, 9, 10,
-	// 	8, 10, 11,
+		// Right
+		8, 9, 10,
+		8, 10, 11,
 
-	// 	// Front
-	// 	13, 12, 14,
-	// 	15, 14, 12,
+		// Front
+		13, 12, 14,
+		15, 14, 12,
 
-	// 	// Back
-	// 	16, 17, 18,
-	// 	16, 18, 19,
+		// Back
+		16, 17, 18,
+		16, 18, 19,
 
-	// 	// Bottom
-	// 	21, 20, 22,
-	// 	22, 20, 23
-	// ];
+		// Bottom
+		21, 20, 22,
+		22, 20, 23
+	];
 
   const DODECAHEDRON_VERTEX_BUFFER_OBJECT = GL.createBuffer();
   GL.bindBuffer(GL.ARRAY_BUFFER, DODECAHEDRON_VERTEX_BUFFER_OBJECT);
-  GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(DODECAHEDRON_VERTEXES), GL.STATIC_DRAW);
+  GL.bufferData(
+    GL.ARRAY_BUFFER, 
+    new Float32Array(
+      // boxVertices, 
+      DODECAHEDRON_VERTEXES
+      // TETRAHEDRON_VERTEXES
+    ), 
+    GL.STATIC_DRAW
+  );
 
   DODECAHEDRON_VERTEXES = [];
 
   const DODECAHEDRON_INDEX_BUFFER_OBJECT = GL.createBuffer();
   GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, DODECAHEDRON_INDEX_BUFFER_OBJECT);
-  GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(DODECAHEDRON_INDEXES), GL.STATIC_DRAW);
+  GL.bufferData(
+    GL.ELEMENT_ARRAY_BUFFER, 
+    new Uint16Array(
+      // boxIndices, 
+      DODECAHEDRON_INDEXES
+      // TETRAHEDRON_INDEXES
+    ), 
+    GL.STATIC_DRAW
+  );
 
   DODECAHEDRON_INDEXES = [];
 
-  const POSITION_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertPosition`);
+  const POSITION_ATTRIBUTE_LOCATION = GL.getAttribLocation(
+    PROGRAM, 
+    `iVertPosition`
+  );
   const COLOR_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertColor`);
   const NORMAL_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `iVertNormal`);
   // const TEXTURE_COORDINATE_ATTRIBUTE_LOCATION = GL.getAttribLocation(PROGRAM, `vertTextureCoordinate`);
@@ -208,28 +232,40 @@ window.onload = async () => {
   GL.enableVertexAttribArray(COLOR_ATTRIBUTE_LOCATION);
   // GL.enableVertexAttribArray(TEXTURE_COORDINATE_ATTRIBUTE_LOCATION);
 
-  const BOX_TEXTURE = GL.createTexture();
-  GL.bindTexture(GL.TEXTURE_2D, BOX_TEXTURE);
-  GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
-  GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
-  GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
-  GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
-  GL.texImage2D(
-    GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, 
-    GL.UNSIGNED_BYTE, 
-    IMAGE
-  );
-  GL.bindTexture(GL.TEXTURE_2D, null);
+  // const BOX_TEXTURE = GL.createTexture();
+  // GL.bindTexture(GL.TEXTURE_2D, BOX_TEXTURE);
+  // GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+  // GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+  // GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
+  // GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
+  // GL.texImage2D(
+  //   GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, 
+  //   GL.UNSIGNED_BYTE, 
+  //   IMAGE
+  // );
+  // GL.bindTexture(GL.TEXTURE_2D, null);
 
   GL.useProgram(PROGRAM);
 
   const UNIFORM_MAT_LOCATION_WORLD = GL.getUniformLocation(PROGRAM, `uWorld`);
   const UNIFORM_MAT_LOCATION_VIEW = GL.getUniformLocation(PROGRAM, `uView`);
-  const UNIFORM_MAT_LOCATION_PROJECTION = GL.getUniformLocation(PROGRAM, `uProjection`);
+  const UNIFORM_MAT_LOCATION_PROJECTION = GL.getUniformLocation(
+    PROGRAM, 
+    `uProjection`
+  );
   const UNIFORM_MAT_LOCATION_NORMAL = GL.getUniformLocation(PROGRAM, `uNormal`);
-  const UNIFORM_VEC_LOCATION_AMBIENT_LIGHT_COLOR = GL.getUniformLocation(PROGRAM, `uAmbientLightColor`);
-  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR = GL.getUniformLocation(PROGRAM, `uDirectionalLightColor`);
-  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR = GL.getUniformLocation(PROGRAM, `uDirectionalLightVector`);
+  const UNIFORM_VEC_LOCATION_AMBIENT_LIGHT_COLOR = GL.getUniformLocation(
+    PROGRAM, 
+    `uAmbientLightColor`
+  );
+  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR = GL.getUniformLocation(
+    PROGRAM, 
+    `uDirectionalLightColor`
+  );
+  const UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR = GL.getUniformLocation(
+    PROGRAM, 
+    `uDirectionalLightVector`
+  );
 
   const MATRIX_WORLD = mat4.create();
 
@@ -237,22 +273,38 @@ window.onload = async () => {
   mat4.lookAt(MATRIX_VIEW, [0, 0, -7], [0, 0, 0], [0, 1, 0]);
 
   const MATRIX_PROJECTION = mat4.create();
-  mat4.perspective(MATRIX_PROJECTION, Math.PI * 1 / 3, CANVAS.width / CANVAS.height, 0.1, 1000.0);
+  mat4.perspective(
+    MATRIX_PROJECTION, 
+    Math.PI * 1 / 3, 
+    CANVAS.width / CANVAS.height, 
+    0.1, 
+    1000.0
+  );
 
   const MATRIX_NORMAL = mat4.create();
-  const AMBIENT_LIGHT_COLOR = new Float32Array([.99, .0, .99]);
+  const AMBIENT_LIGHT_COLOR = new Float32Array([.99, .99, .99]);
   const DIRECTIONAL_LIGHT_COLOR = new Float32Array([.99, .99, .99]);
-  const DIRECTIONAL_LIGHT_VECTOR = new Float32Array([.85, .8, .75]);
+  const DIRECTIONAL_LIGHT_VECTOR = new Float32Array([.99, .99, .99]);
   vec3.normalize(DIRECTIONAL_LIGHT_VECTOR, DIRECTIONAL_LIGHT_VECTOR);
 
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_WORLD, GL.FALSE, MATRIX_WORLD);
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_VIEW, GL.FALSE, MATRIX_VIEW);
-  GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_PROJECTION, GL.FALSE, MATRIX_PROJECTION);
+  GL.uniformMatrix4fv(
+    UNIFORM_MAT_LOCATION_PROJECTION, 
+    GL.FALSE, 
+    MATRIX_PROJECTION
+  );
   GL.uniformMatrix4fv(UNIFORM_MAT_LOCATION_NORMAL, GL.FALSE, MATRIX_NORMAL);
 
   GL.uniform3fv(UNIFORM_VEC_LOCATION_AMBIENT_LIGHT_COLOR, AMBIENT_LIGHT_COLOR);
-  GL.uniform3fv(UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR, DIRECTIONAL_LIGHT_COLOR);
-  GL.uniform3fv(UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR, DIRECTIONAL_LIGHT_VECTOR);
+  GL.uniform3fv(
+    UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_COLOR, 
+    DIRECTIONAL_LIGHT_COLOR
+  );
+  GL.uniform3fv(
+    UNIFORM_VEC_LOCATION_DIRECTIONAL_LIGHT_VECTOR, 
+    DIRECTIONAL_LIGHT_VECTOR
+  );
 
   const MATRIX_IDENTITY = mat4.create();
 
@@ -283,13 +335,20 @@ window.onload = async () => {
     GL.clearColor(0.01, 0.01, 0.01, 1.);
     GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT | GL.STENCIL_BUFFER_BIT);
 
-    GL.bindTexture(GL.TEXTURE_2D, BOX_TEXTURE);
-    GL.activeTexture(GL.TEXTURE0);
+    // GL.bindTexture(GL.TEXTURE_2D, BOX_TEXTURE);
+    // GL.activeTexture(GL.TEXTURE0);
 
     GL.drawArrays(GL.TRIANGLES, 0, 3);
-    GL.drawElements(GL.TRIANGLES, DODECAHEDRON_INDEXES_LENGTH, GL.UNSIGNED_SHORT, 0);
+    GL.drawElements(
+      GL.TRIANGLES, 
+      // boxIndices.length, 
+      DODECAHEDRON_INDEXES_LENGTH, 
+      // TETRAHEDRON_INDEXES_LENGTH, 
+      GL.UNSIGNED_SHORT, 
+      0
+    );
 
-    requestAnimationFrame(loop); 
+    requestAnimationFrame(loop);
   }
 
   loop();
